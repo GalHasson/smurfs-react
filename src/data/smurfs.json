@@ -1,0 +1,90 @@
+[
+  {
+    "id": "1",
+    "firstName": "Papa",
+    "lastName": "Smurf",
+    "location": { "x": 12.4, "y": 87.2 },
+    "createdAt": "1958-10-23T08:00:00Z",
+    "quotes": [
+      "Great Smurfity smurf! We must work together.",
+      "Every Smurf has a role to play in the village."
+    ]
+  },
+  {
+    "id": "2",
+    "firstName": "Smurfette",
+    "lastName": "Smurf",
+    "location": { "x": 45.1, "y": 62.8 },
+    "createdAt": "1966-04-12T14:30:00Z",
+    "quotes": [
+      "I may be different, but I belong here too.",
+      "Flowers always make the village brighter."
+    ]
+  },
+  {
+    "id": "3",
+    "firstName": "Brainy",
+    "lastName": "Smurf",
+    "location": { "x": 33.7, "y": 19.5 },
+    "createdAt": "1961-03-08T09:15:00Z",
+    "quotes": [
+      "According to my calculations, this plan is flawless.",
+      "Papa Smurf always says patience is a virtue!"
+    ]
+  },
+  {
+    "id": "4",
+    "firstName": "Hefty",
+    "lastName": "Smurf",
+    "location": { "x": 78.3, "y": 41.0 },
+    "createdAt": "1960-11-02T11:45:00Z",
+    "quotes": [
+      "Leave the heavy lifting to me!",
+      "A strong Smurf protects his friends."
+    ]
+  },
+  {
+    "id": "5",
+    "firstName": "Clumsy",
+    "lastName": "Smurf",
+    "location": { "x": 22.9, "y": 55.6 },
+    "createdAt": "1961-07-19T16:20:00Z",
+    "quotes": [
+      "Oops! Sorry about that.",
+      "I didn't mean to trip over the mushroom!"
+    ]
+  },
+  {
+    "id": "6",
+    "firstName": "Jokey",
+    "lastName": "Smurf",
+    "location": { "x": 61.2, "y": 73.4 },
+    "createdAt": "1962-01-28T10:00:00Z",
+    "quotes": [
+      "Want to hear a joke? It's a real surprise!",
+      "Laughter is the best smurf medicine."
+    ]
+  },
+  {
+    "id": "7",
+    "firstName": "Grouchy",
+    "lastName": "Smurf",
+    "location": { "x": 5.8, "y": 31.1 },
+    "createdAt": "1959-09-14T07:30:00Z",
+    "quotes": [
+      "I hate surprises. I hate jokes. I hate mornings.",
+      "Don't touch my smurfberries!"
+    ]
+  },
+  {
+    "id": "8",
+    "firstName": "Vanity",
+    "lastName": "Smurf",
+    "location": { "x": 90.0, "y": 12.7 },
+    "createdAt": "1963-05-03T13:00:00Z",
+    "quotes": [
+      "Mirror, mirror, who is the smurfiest of all?",
+      "A Smurf must always look his best."
+    ]
+  }
+]
