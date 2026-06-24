@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {
   flexRender,
   getCoreRowModel,
   useReactTable,
   type ColumnDef,
 } from '@tanstack/react-table'
-import { smurfsData } from '../data/smurfs'
-import type { ActiveCell, Smurf, SmurfLocation } from '../types/smurfs'
+import {smurfsData} from '@/data/smurfs'
+import type {ActiveCell, Smurf, SmurfLocation} from '@/types/smurfs'
 import './SmurfsTable.css'
 
 function formatCoordinates(location: SmurfLocation): string {
@@ -20,7 +20,7 @@ function formatCreatedAt(isoString: string): string {
   })
 }
 
-function QuotesCell({ quotes }: { quotes: string[] }) {
+function QuotesCell({quotes}: {quotes: string[]}) {
   return (
     <ul className="quotes-list">
       {quotes.map((quote, index) => (
@@ -31,7 +31,7 @@ function QuotesCell({ quotes }: { quotes: string[] }) {
 }
 
 export default function SmurfsTable() {
-  const [activeCell, setActiveCell] = useState<ActiveCell>({ row: 0, col: 0 })
+  const [activeCell, setActiveCell] = useState<ActiveCell>({row: 0, col: 0})
   const tableRef = useRef<HTMLTableElement>(null)
   const cellRefs = useRef<Map<string, HTMLTableCellElement>>(new Map())
 
@@ -58,7 +58,7 @@ export default function SmurfsTable() {
       {
         id: 'quotes',
         header: 'Quotes',
-        cell: ({ row }) => <QuotesCell quotes={row.original.quotes} />,
+        cell: ({row}) => <QuotesCell quotes={row.original.quotes} />,
       },
     ],
     [],
@@ -87,7 +87,7 @@ export default function SmurfsTable() {
         const nextRow = Math.max(0, Math.min(rowCount - 1, prev.row + rowDelta))
         const nextCol = Math.max(0, Math.min(colCount - 1, prev.col + colDelta))
         focusCell(nextRow, nextCol)
-        return { row: nextRow, col: nextCol }
+        return {row: nextRow, col: nextCol}
       })
     },
     [rowCount, colCount, focusCell],
@@ -150,11 +150,7 @@ export default function SmurfsTable() {
       <div aria-live="polite" className="sr-only">
         {activeCellAnnouncement}
       </div>
-      <table
-        ref={tableRef}
-        className="smurfs-table"
-        onKeyDown={handleKeyDown}
-      >
+      <table ref={tableRef} className="smurfs-table" onKeyDown={handleKeyDown}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -190,10 +186,10 @@ export default function SmurfsTable() {
                     tabIndex={isActive ? 0 : -1}
                     className={isActive ? 'cell-active' : undefined}
                     onFocus={() =>
-                      setActiveCell({ row: rowIndex, col: colIndex })
+                      setActiveCell({row: rowIndex, col: colIndex})
                     }
                     onClick={() => {
-                      setActiveCell({ row: rowIndex, col: colIndex })
+                      setActiveCell({row: rowIndex, col: colIndex})
                       focusCell(rowIndex, colIndex)
                     }}
                   >
