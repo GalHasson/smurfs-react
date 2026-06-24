@@ -1,7 +1,7 @@
 import {afterEach, describe, expect, it, vi} from 'vitest'
 import {cleanup, render, screen} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import SmurfsTable from './SmurfsTable'
+import SmurfsTable from '@/components/SmurfsTable'
 import {smurfsData} from '@/data/smurfs'
 
 afterEach(() => {
