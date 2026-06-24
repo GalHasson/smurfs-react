@@ -93,8 +93,15 @@ export default function SmurfsTable() {
     [rowCount, colCount, focusCell],
   )
 
+  const [isFirstKeyPress, setIsFirstKeyPress] = useState(true)
+
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLTableElement>) => {
+      if (isFirstKeyPress) {
+        setIsFirstKeyPress(false)
+        return
+      }
+
       switch (event.key) {
         case 'ArrowUp':
           event.preventDefault()
@@ -116,7 +123,7 @@ export default function SmurfsTable() {
           break
       }
     },
-    [moveActiveCell],
+    [moveActiveCell, isFirstKeyPress],
   )
 
   useEffect(() => {
