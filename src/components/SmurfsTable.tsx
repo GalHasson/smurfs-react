@@ -7,7 +7,6 @@ import {
 } from '@tanstack/react-table'
 import {smurfsData} from '@/data/smurfs'
 import type {ActiveCell, Smurf, SmurfLocation} from '@/types/smurfs'
-import './SmurfsTable.css'
 
 function formatCoordinates(location: SmurfLocation): string {
   return `(${location.x}, ${location.y})`
@@ -22,7 +21,7 @@ function formatCreatedAt(isoString: string): string {
 
 function QuotesCell({quotes}: {quotes: string[]}) {
   return (
-    <ul className="quotes-list">
+    <ul className="m-0 space-y-[0.35rem] pl-[1.1rem]">
       {quotes.map((quote, index) => (
         <li key={index}>{quote}</li>
       ))}
@@ -143,19 +142,26 @@ export default function SmurfsTable() {
   }, [activeCell])
 
   return (
-    <div className="smurfs-table-wrapper">
-      <p className="smurfs-table-hint">
+    <div className="px-6 pt-8 pb-12 text-left">
+      <p className="mb-4 text-[0.9rem]">
         Click a cell or use arrow keys to navigate the table.
       </p>
       <div aria-live="polite" className="sr-only">
         {activeCellAnnouncement}
       </div>
-      <table ref={tableRef} className="smurfs-table" onKeyDown={handleKeyDown}>
+      <table
+        ref={tableRef}
+        className="w-full border-collapse text-[0.95rem]"
+        onKeyDown={handleKeyDown}
+      >
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id}>
+                <th
+                  key={header.id}
+                  className="border border-border bg-code-bg px-[0.85rem] py-[0.65rem] text-left align-top font-medium text-text-h"
+                >
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext(),
@@ -167,7 +173,7 @@ export default function SmurfsTable() {
         </thead>
         <tbody>
           {table.getRowModel().rows.map((row, rowIndex) => (
-            <tr key={row.id}>
+            <tr key={row.id} className="even:bg-social-bg">
               {row.getVisibleCells().map((cell, colIndex) => {
                 const isActive =
                   activeCell.row === rowIndex && activeCell.col === colIndex
@@ -184,7 +190,8 @@ export default function SmurfsTable() {
                       }
                     }}
                     tabIndex={isActive ? 0 : -1}
-                    className={isActive ? 'cell-active' : undefined}
+                    data-active={isActive}
+                    className="border border-border px-[0.85rem] py-[0.65rem] align-top outline-none cursor-cell data-[active=true]:bg-accent-bg data-[active=true]:shadow-[inset_0_0_0_2px_var(--color-accent)]"
                     onFocus={() =>
                       setActiveCell({row: rowIndex, col: colIndex})
                     }

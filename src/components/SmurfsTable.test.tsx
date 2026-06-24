@@ -22,14 +22,14 @@ describe('SmurfsTable', () => {
     render(<SmurfsTable />)
 
     const firstCell = screen.getByText(smurfsData[0].firstName).closest('td')
-    expect(firstCell).toHaveClass('cell-active')
+    expect(firstCell).toHaveAttribute('data-active', 'true')
 
     firstCell?.focus()
     await user.keyboard('{ArrowDown}')
 
     const movedCell = screen.getByText(smurfsData[1].firstName).closest('td')
-    expect(movedCell).toHaveClass('cell-active')
-    expect(firstCell).not.toHaveClass('cell-active')
+    expect(movedCell).toHaveAttribute('data-active', 'true')
+    expect(firstCell).toHaveAttribute('data-active', 'false')
   })
 
   it('moves the active cell on the very first arrow key press', async () => {
@@ -43,8 +43,8 @@ describe('SmurfsTable', () => {
     await user.keyboard('{ArrowRight}')
 
     const cellsInFirstRow = firstRow?.querySelectorAll('td')
-    expect(cellsInFirstRow?.[1]).toHaveClass('cell-active')
-    expect(firstCell).not.toHaveClass('cell-active')
+    expect(cellsInFirstRow?.[1]).toHaveAttribute('data-active', 'true')
+    expect(firstCell).toHaveAttribute('data-active', 'false')
   })
 
   it('does not reformat the whole dataset when only the active cell changes', async () => {
