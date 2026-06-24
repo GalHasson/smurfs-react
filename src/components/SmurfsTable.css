@@ -3,6 +3,15 @@
   text-align: left;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
 .smurfs-table-hint {
   margin: 0 0 1rem;
   font-size: 0.9rem;

@@ -123,11 +123,26 @@ export default function SmurfsTable() {
     focusCell(activeCell.row, activeCell.col)
   }, [activeCell.row, activeCell.col, focusCell])
 
+  const [activeCellAnnouncement, setActiveCellAnnouncement] = useState('')
+
+  useEffect(() => {
+    const descriptions = smurfsData.map(
+      (smurf) =>
+        `${smurf.firstName} ${smurf.lastName}, spotted at ${formatCoordinates(
+          smurf.location,
+        )}, joined ${formatCreatedAt(smurf.createdAt)}`,
+    )
+    setActiveCellAnnouncement(descriptions[activeCell.row] ?? '')
+  }, [activeCell])
+
   return (
     <div className="smurfs-table-wrapper">
       <p className="smurfs-table-hint">
         Click a cell or use arrow keys to navigate the table.
       </p>
+      <div aria-live="polite" className="sr-only">
+        {activeCellAnnouncement}
+      </div>
       <table
         ref={tableRef}
         className="smurfs-table"
