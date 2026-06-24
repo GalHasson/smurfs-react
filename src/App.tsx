@@ -1,11 +1,10 @@
 import SmurfsTable from './components/SmurfsTable'
-import './App.css'
 
 function App() {
   return (
-    <main className="app">
-      <header className="app-header">
-        <h1>Smurf Directory</h1>
+    <main className="flex min-h-svh flex-col">
+      <header className="px-6 pt-8 text-center">
+        <h1 className="m-0 mb-2 text-[2.5rem]">Smurf Directory</h1>
         <p>A registry of every Smurf in the village.</p>
       </header>
       <SmurfsTable />

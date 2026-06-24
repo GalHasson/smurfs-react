@@ -1,13 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {
   flexRender,
   getCoreRowModel,
   useReactTable,
   type ColumnDef,
 } from '@tanstack/react-table'
-import { smurfsData } from '../data/smurfs'
-import type { ActiveCell, Smurf, SmurfLocation } from '../types/smurfs'
-import './SmurfsTable.css'
+import {smurfsData} from '@/data/smurfs'
+import type {ActiveCell, Smurf, SmurfLocation} from '@/types/smurfs'
 
 function formatCoordinates(location: SmurfLocation): string {
   return `(${location.x}, ${location.y})`
@@ -20,9 +19,9 @@ function formatCreatedAt(isoString: string): string {
   })
 }
 
-function QuotesCell({ quotes }: { quotes: string[] }) {
+function QuotesCell({quotes}: {quotes: string[]}) {
   return (
-    <ul className="quotes-list">
+    <ul className="m-0 space-y-[0.35rem] pl-[1.1rem]">
       {quotes.map((quote, index) => (
         <li key={index}>{quote}</li>
       ))}
@@ -31,7 +30,7 @@ function QuotesCell({ quotes }: { quotes: string[] }) {
 }
 
 export default function SmurfsTable() {
-  const [activeCell, setActiveCell] = useState<ActiveCell>({ row: 0, col: 0 })
+  const [activeCell, setActiveCell] = useState<ActiveCell>({row: 0, col: 0})
   const tableRef = useRef<HTMLTableElement>(null)
   const cellRefs = useRef<Map<string, HTMLTableCellElement>>(new Map())
 
@@ -58,7 +57,7 @@ export default function SmurfsTable() {
       {
         id: 'quotes',
         header: 'Quotes',
-        cell: ({ row }) => <QuotesCell quotes={row.original.quotes} />,
+        cell: ({row}) => <QuotesCell quotes={row.original.quotes} />,
       },
     ],
     [],
@@ -87,14 +86,21 @@ export default function SmurfsTable() {
         const nextRow = Math.max(0, Math.min(rowCount - 1, prev.row + rowDelta))
         const nextCol = Math.max(0, Math.min(colCount - 1, prev.col + colDelta))
         focusCell(nextRow, nextCol)
-        return { row: nextRow, col: nextCol }
+        return {row: nextRow, col: nextCol}
       })
     },
     [rowCount, colCount, focusCell],
   )
 
+  const [isFirstKeyPress, setIsFirstKeyPress] = useState(true)
+
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent<HTMLTableElement>) => {
+      if (isFirstKeyPress) {
+        setIsFirstKeyPress(false)
+        return
+      }
+
       switch (event.key) {
         case 'ArrowUp':
           event.preventDefault()
@@ -116,28 +122,46 @@ export default function SmurfsTable() {
           break
       }
     },
-    [moveActiveCell],
+    [moveActiveCell, isFirstKeyPress],
   )
 
   useEffect(() => {
     focusCell(activeCell.row, activeCell.col)
   }, [activeCell.row, activeCell.col, focusCell])
 
+  const [activeCellAnnouncement, setActiveCellAnnouncement] = useState('')
+
+  useEffect(() => {
+    const descriptions = smurfsData.map(
+      (smurf) =>
+        `${smurf.firstName} ${smurf.lastName}, spotted at ${formatCoordinates(
+          smurf.location,
+        )}, joined ${formatCreatedAt(smurf.createdAt)}`,
+    )
+    setActiveCellAnnouncement(descriptions[activeCell.row] ?? '')
+  }, [activeCell])
+
   return (
-    <div className="smurfs-table-wrapper">
-      <p className="smurfs-table-hint">
+    <div className="px-6 pt-8 pb-12 text-left">
+      <p className="mb-4 text-[0.9rem]">
         Click a cell or use arrow keys to navigate the table.
       </p>
+      <div aria-live="polite" className="sr-only">
+        {activeCellAnnouncement}
+      </div>
       <table
         ref={tableRef}
-        className="smurfs-table"
+        className="w-full border-collapse text-[0.95rem]"
         onKeyDown={handleKeyDown}
       >
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id}>
+                <th
+                  key={header.id}
+                  className="border border-border bg-code-bg px-[0.85rem] py-[0.65rem] text-left align-top font-medium text-text-h"
+                >
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext(),
@@ -149,7 +173,7 @@ export default function SmurfsTable() {
         </thead>
         <tbody>
           {table.getRowModel().rows.map((row, rowIndex) => (
-            <tr key={row.id}>
+            <tr key={row.id} className="even:bg-social-bg">
               {row.getVisibleCells().map((cell, colIndex) => {
                 const isActive =
                   activeCell.row === rowIndex && activeCell.col === colIndex
@@ -166,12 +190,13 @@ export default function SmurfsTable() {
                       }
                     }}
                     tabIndex={isActive ? 0 : -1}
-                    className={isActive ? 'cell-active' : undefined}
+                    data-active={isActive}
+                    className="border border-border px-[0.85rem] py-[0.65rem] align-top outline-none cursor-cell data-[active=true]:bg-accent-bg data-[active=true]:shadow-[inset_0_0_0_2px_var(--color-accent)]"
                     onFocus={() =>
-                      setActiveCell({ row: rowIndex, col: colIndex })
+                      setActiveCell({row: rowIndex, col: colIndex})
                     }
                     onClick={() => {
-                      setActiveCell({ row: rowIndex, col: colIndex })
+                      setActiveCell({row: rowIndex, col: colIndex})
                       focusCell(rowIndex, colIndex)
                     }}
                   >
