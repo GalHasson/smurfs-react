@@ -126,13 +126,14 @@ export default function SmurfsTable() {
   const [activeCellAnnouncement, setActiveCellAnnouncement] = useState('')
 
   useEffect(() => {
-    const descriptions = smurfsData.map(
-      (smurf) =>
-        `${smurf.firstName} ${smurf.lastName}, spotted at ${formatCoordinates(
-          smurf.location,
-        )}, joined ${formatCreatedAt(smurf.createdAt)}`,
+    const smurf = smurfsData[activeCell.row]
+    setActiveCellAnnouncement(
+      smurf
+        ? `${smurf.firstName} ${smurf.lastName}, spotted at ${formatCoordinates(
+            smurf.location,
+          )}, joined ${formatCreatedAt(smurf.createdAt)}`
+        : '',
     )
-    setActiveCellAnnouncement(descriptions[activeCell.row] ?? '')
   }, [activeCell])
 
   return (
